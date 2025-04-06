@@ -68,7 +68,7 @@ const DashboardPage = () => {
         <h2>查询图像</h2>
         <input
           type="text"
-          placeholder="图像 ID"
+          placeholder="用户名"
           value={imageId}
           onChange={(e) => setImageId(e.target.value)}
         />
