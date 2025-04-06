@@ -27,12 +27,12 @@
   {
     "inputs": [
       {
-        "internalType": "string",
+        "internalType": "address",
         "name": "",
-        "type": "string"
+        "type": "address"
       }
     ],
-    "name": "emailToUsername",
+    "name": "addressToUsername",
     "outputs": [
       {
         "internalType": "string",
@@ -99,9 +99,34 @@
         "internalType": "string",
         "name": "",
         "type": "string"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
-    "name": "usersByUsername",
+    "name": "userImages",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "",
+        "type": "string"
+      }
+    ],
+    "name": "users",
     "outputs": [
       {
         "internalType": "string",
@@ -175,6 +200,48 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function",
+    "constant": true
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "_username",
+        "type": "string"
+      }
+    ],
+    "name": "getImagesByUsername",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "imageHash",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "metadata",
+            "type": "string"
+          },
+          {
+            "internalType": "address",
+            "name": "uploader",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "timestamp",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct ImageStore.Image[]",
+        "name": "",
+        "type": "tuple[]"
       }
     ],
     "stateMutability": "view",

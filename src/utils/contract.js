@@ -1,26 +1,63 @@
 import { ethers } from "ethers";
-import contractABI from "./contractABI.json";
+import contractABI from "./contractABI.json"; // 确保 ABI 文件路径正确
 
-const provider = new ethers.JsonRpcProvider("http://127.0.0.1:7545");
-const contractAddress = "0x1293Ac947Df0Bd26F1227060F755c1C73d1CD02a"; // 实际的合约地址
+// 智能合约地址（替换为您部署的合约地址）
+const contractAddress = "0x8626c30E9d75505f84f94D2eD6059Dd42E4D2b34";
 
-// 静态私钥
-const STATIC_PRIVATE_KEY = "0xb8927b115399cacc1af3d02afe36e89f928e7daee3e6a5a1a07d77df8656a5d2";  //实际的私钥
+// Ganache 本地区块链的 RPC URL
+const ganacheRpcUrl = "http://127.0.0.1:7545"; // 替换为您的 Ganache RPC 地址
 
-// 创建 Signer
-const getSigner = () => {
-  try {
-    return new ethers.Wallet(STATIC_PRIVATE_KEY, provider);
-  } catch (error) {
-    console.error("创建 Signer 失败：", error.message);
-    throw new Error("无效的私钥，请检查私钥格式是否正确");
-  }
-};
+// 使用私钥初始化钱包（替换为您的 Ganache 私钥）
+const privateKey = "0xb8927b115399cacc1af3d02afe36e89f928e7daee3e6a5a1a07d77df8656a5d2"; // 替换为您的私钥
+const provider = new ethers.JsonRpcProvider(ganacheRpcUrl);
+const wallet = new ethers.Wallet(privateKey, provider);
 
 // 创建合约实例
 const getContract = () => {
-  const signer = getSigner();
-  return new ethers.Contract(contractAddress, contractABI, signer);
+  return new ethers.Contract(contractAddress, contractABI, wallet);
+};
+
+// 上传图像到区块链
+export const uploadImage = async (imageHash, metadata) => {
+  try {
+    if (!imageHash || !metadata) {
+      throw new Error("图像哈希或元数据不能为空");
+    }
+
+    const contract = getContract();
+    const tx = await contract.uploadImage(imageHash, metadata);
+    await tx.wait(); // 等待交易完成
+    console.log("图像上传成功！");
+  } catch (error) {
+    console.error("上传图像失败：", error.message);
+    throw new Error("上传图像失败，请检查输入参数或账户状态");
+  }
+};
+
+// 查询用户上传的所有图像
+export const getImagesByUsername = async (username) => {
+  try {
+    if (!username) {
+      throw new Error("用户名不能为空");
+    }
+
+    const contract = getContract();
+    const images = await contract.getImagesByUsername(username);
+
+    // 格式化返回的图像数据
+    const formattedImages = images.map((image) => ({
+      imageHash: image.imageHash,
+      metadata: image.metadata,
+      uploader: image.uploader,
+      timestamp: new Date(Number(image.timestamp) * 1000).toLocaleString(), // 转换时间戳为本地时间
+    }));
+
+    console.log("查询到的图像：", formattedImages);
+    return formattedImages;
+  } catch (error) {
+    console.error("查询图像失败：", error.message);
+    throw new Error("查询图像失败，请检查用户名或账户状态");
+  }
 };
 
 // 用户注册
@@ -56,30 +93,4 @@ export const authenticate = async (username, email) => {
   }
 };
 
-// 上传图像
-export const uploadImage = async (imageHash, metadata) => {
-  try {
-    const contract = getContract();
-    const tx = await contract.uploadImage(imageHash, metadata);
-    await tx.wait(); // 等待交易完成
-    console.log("图像上传成功！");
-  } catch (error) {
-    console.error("上传图像失败：", error.message);
-    if (error.transaction) {
-      console.error("交易数据：", error.transaction);
-    }
-    throw new Error("图像上传失败，请检查输入参数或账户状态");
-  }
-};
-
-// 获取图像
-export const getImage = async (imageId) => {
-  try {
-    const contract = getContract();
-    const result = await contract.getImage(imageId);
-    return result; // 返回图像的元数据
-  } catch (error) {
-    console.error("获取图像失败：", error.message);
-    throw new Error("获取图像失败，请检查图像 ID 或账户状态");
-  }
-};
+export default getContract;

@@ -1,0 +1,74 @@
+/* 背景样式 */
+.register-container {
+    background-image: url('/public/bg1.jpg'); /* 替换为您的背景图片路径 */
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* 卡片样式 */
+  .register-card {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    color: #fff;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  /* 标题样式 */
+  .register-card h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  /* 输入框样式 */
+  .text-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  /* 按钮样式 */
+  .submit-button, .toggle-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .submit-button:hover, .toggle-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .submit-button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+  
+  /* 切换按钮样式 */
+  .toggle-button {
+    background-color: transparent;
+    color: #ffd700;
+    border: 1px solid #ffd700;
+  }
+  
+  .toggle-button:hover {
+    background-color: #ffd700;
+    color: #000;
+  }
