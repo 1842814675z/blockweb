@@ -1,14 +1,14 @@
 import { ethers } from "ethers";
 import contractABI from "./contractABI.json"; // 确保 ABI 文件路径正确
 
-// 智能合约地址（替换为您部署的合约地址）
+// 智能合约地址
 const contractAddress = "0x8626c30E9d75505f84f94D2eD6059Dd42E4D2b34";
 
 // Ganache 本地区块链的 RPC URL
 const ganacheRpcUrl = "http://127.0.0.1:7545"; // 替换为您的 Ganache RPC 地址
 
 // 使用私钥初始化钱包（替换为您的 Ganache 私钥）
-const privateKey = "0xb8927b115399cacc1af3d02afe36e89f928e7daee3e6a5a1a07d77df8656a5d2"; // 替换为您的私钥
+const privateKey = "0xd837d5e437346fbb390f45c0531b4087148fc9ea82c0d77c3bc6f597b4cb936c"; // 替换为您的私钥
 const provider = new ethers.JsonRpcProvider(ganacheRpcUrl);
 const wallet = new ethers.Wallet(privateKey, provider);
 
